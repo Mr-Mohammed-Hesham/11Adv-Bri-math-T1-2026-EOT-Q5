@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📐 Limits, Continuity & IVT - رياضيات 11 متقدم | Mr. Mohammed Hesham</title>
+<meta name="description" content="امتحان تفاعلي عن النهايات والاتصال ونظرية القيمة الوسطية - رياضيات 11 متقدم">
+<meta name="author" content="Mr. Mohammed Hesham">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body { font-family: 'Cairo', sans-serif; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); }
+body.en-mode { font-family: 'Inter', sans-serif; direction: ltr; }
+.arabic-math { font-family: 'Amiri', 'Cairo', serif; }
+.correct { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+.incorrect { background-color: #fee2e2 !important; border-color: #dc2626 !important; }
+.timer-warning { color: #dc2626 !important; animation: pulse 1s infinite; }
+@keyframes pulse { 50% { opacity: 0.7; } }
+@media print { .no-print { display: none !important; } }
+.success-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.875rem; }
+.grade-excellent { background: #dcfce7; color: #166534; }
+.grade-good { background: #fef3c7; color: #92400e; }
+.grade-pass { background: #dbeafe; color: #1e40af; }
+.grade-fail { background: #fee2e2; color: #991b1b; }
+.lang-switch { position: fixed; top: 16px; left: 16px; z-index: 100; background: white; padding: 6px; border-radius: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); display: flex; gap: 4px; border: 2px solid #d97706; }
+body.en-mode .lang-switch { left: auto; right: 16px; }
+.lang-btn { padding: 6px 14px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: all 0.3s; border: none; font-size: 0.875rem; background: transparent; color: #6b7280; }
+.lang-btn.active { background: #d97706; color: white; box-shadow: 0 2px 6px rgba(217,119,6,0.4); }
+.shuffle-badge { display: inline-block; background: linear-gradient(135deg, #d97706, #b45309); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; margin-right: 8px; }
+body.en-mode .shuffle-badge { margin-right: 0; margin-left: 8px; }
+.math-display { display: inline-block; direction: ltr; font-family: 'Amiri', serif; font-size: 1.1em; padding: 2px 6px; background: #fef3c7; border-radius: 4px; margin: 2px; color: #92400e; font-weight: 600; }
+.save-indicator { position: fixed; bottom: 20px; left: 20px; z-index: 200; background: #10b981; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+body.en-mode .save-indicator { left: auto; right: 20px; }
+.save-indicator.show { opacity: 1; }
+.formula-box { background: #fef3c7; border: 2px solid #f59e0b; border-radius: 8px; padding: 12px; margin: 10px 0; font-family: 'Amiri', serif; direction: ltr; text-align: center; }
+.svg-graph { display: block; margin: 12px auto; background: white; border: 2px solid #e5e7eb; border-radius: 12px; padding: 8px; max-width: 100%; }
+.graph-container { text-align: center; margin: 10px 0; }
+.module-badge { display: inline-block; padding: 4px 16px; border-radius: 20px; font-weight: bold; font-size: 0.85rem; margin-bottom: 8px; }
+.module-1 { background: #fef3c7; color: #92400e; }
+.module-2 { background: #dbeafe; color: #1e40af; }
+.module-3 { background: #fce7f3; color: #9f1239; }
+.module-4 { background: #ecfdf5; color: #065f46; }
+.module-5 { background: #ede9fe; color: #5b21b6; }
+.module-6 { background: #fee2e2; color: #991b1b; }
+</style>
+</head>
+<body class="p-4 md:p-8 min-h-screen">
+
+<div class="lang-switch no-print">
+<button class="lang-btn active" onclick="setLanguage('ar')" id="btn-ar">عربي</button>
+<button class="lang-btn" onclick="setLanguage('en')" id="btn-en">EN</button>
+</div>
+
+<div id="saveIndicator" class="save-indicator">💾 <span data-ar="تم الحفظ" data-en="Saved">تم الحفظ</span></div>
+
+<div id="timer-container" class="max-w-5xl mx-auto mb-4 text-center no-print">
+<div class="bg-white p-4 rounded-2xl shadow-lg inline-block border-2 border-amber-100">
+<span class="text-gray-600 ml-2">⏰ <span data-ar="الوقت المتبقي:" data-en="Time Left:">الوقت المتبقي:</span></span>
+<span id="timer" class="text-2xl font-bold text-amber-700 font-mono">90:00</span>
+<span class="shuffle-badge">📐 <span data-ar="النهايات والاتصال ونظرية القيمة الوسطية" data-en="Limits, Continuity & IVT">النهايات والاتصال ونظرية القيمة الوسطية</span> - 30 <span data-ar="سؤال" data-en="Questions">سؤال</span></span>
+</div>
+</div>
+
+<div class="max-w-5xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+<button onclick="toggleAnswers()" class="bg-amber-700 hover:bg-amber-800 text-white px-5 py-2 rounded-xl font-medium transition shadow">👀 <span data-ar="إظهار/إخفاء الإجابات" data-en="Show/Hide Answers">إظهار/إخفاء الإجابات</span></button>
+<button onclick="window.print()" class="bg-gray-700 hover:bg-gray-900 text-white px-5 py-2 rounded-xl font-medium transition shadow">🖨️ <span data-ar="طباعة" data-en="Print">طباعة</span></button>
+<button onclick="reshuffleExam()" class="bg-gradient-to-r from-amber-700 to-orange-600 hover:from-amber-800 hover:to-orange-700 text-white px-5 py-2 rounded-xl font-medium transition shadow">🔄 <span data-ar="أسئلة جديدة" data-en="New Questions">أسئلة جديدة</span></button>
+<button onclick="clearProgress()" class="bg-red-500 hover:bg-red-600 text-white px-5 py-2 rounded-xl font-medium transition shadow">🗑️ <span data-ar="مسح التقدم" data-en="Clear Progress">مسح التقدم</span></button>
+</div>
+
+<header class="max-w-5xl mx-auto bg-white p-8 rounded-3xl shadow-2xl mb-8 border-4 border-amber-500">
+<div class="text-center">
+<div class="inline-block bg-amber-700 text-white px-6 py-2 rounded-full text-sm font-bold mb-4">MATH 11 ADVANCED - QUESTION 5</div>
+<h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">📐 <span data-ar="النهايات والاتصال ونظرية القيمة الوسطية" data-en="Limits, Continuity & Intermediate Value Theorem">النهايات والاتصال ونظرية القيمة الوسطية</span></h1>
+<h2 class="text-xl text-amber-700 font-semibold mb-2"><span data-ar="رياضيات 11 متقدم - مثال 3 وتمارين 3A-3B" data-en="Grade 11 Advanced - Example 3 & Exercises 3A-3B">رياضيات 11 متقدم - مثال 3 وتمارين 3A-3B</span></h2>
+<p class="text-gray-600 mb-4"><span data-ar="Using Limits for Continuity & IVT for Approximate Zeros" data-en="Using Limits for Continuity & IVT for Approximate Zeros">Using Limits for Continuity & IVT for Approximate Zeros</span></p>
+<p class="text-sm text-green-600 font-semibold">💾 <span data-ar="يتم حفظ تقدمك تلقائياً - 30 سؤالاً في 6 أقسام" data-en="Your progress is auto-saved - 30 questions in 6 sections">يتم حفظ تقدمك تلقائياً - 30 سؤالاً في 6 أقسام</span></p>
+</div>
+<div class="mt-6 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+<span>📅 <span data-ar="التاريخ:" data-en="Date:">التاريخ:</span> <input type="text" id="examDate" class="border-b-2 border-amber-300 bg-transparent w-32 text-center"></span>
+<span>😊 <span data-ar="الاسم:" data-en="Name:">الاسم:</span> <input type="text" id="studentName" class="border-b-2 border-amber-300 bg-transparent w-40 text-center" data-placeholder-ar="اكتب اسمك" data-placeholder-en="Your name" placeholder="اكتب اسمك"></span>
+<span>🏫 <span data-ar="الشعبة:" data-en="Class:">الشعبة:</span> <input type="text" id="studentClass" class="border-b-2 border-amber-300 bg-transparent w-32 text-center" data-placeholder-ar="الشعبة" data-placeholder-en="Class" placeholder="الشعبة"></span>
+<span>⏰ <span data-ar="المدة: 90 دقيقة" data-en="Duration: 90 min">المدة: 90 دقيقة</span></span>
+<span>📊 <span data-ar="المجموع: 100 درجة" data-en="Total: 100 points">المجموع: 100 درجة</span></span>
+</div>
+</header>
+
+<div class="max-w-5xl mx-auto mb-6 bg-white p-4 rounded-xl shadow-lg border-2 border-amber-200 no-print">
+<h3 class="font-bold text-lg mb-3 text-amber-800 text-center">📐 <span data-ar="المفاهيم الأساسية" data-en="Key Concepts">المفاهيم الأساسية</span></h3>
+<div class="grid md:grid-cols-3 gap-3 text-sm">
+<div class="formula-box">
+<strong><span data-ar="اتصال عند نقطة:" data-en="Continuity at a point:">اتصال عند نقطة:</span></strong><br>
+<span class="math-display">lim(x→a) f(x) = f(a)</span><br>
+<span data-ar="النهاية = قيمة الدالة" data-en="Limit = Function value">النهاية = قيمة الدالة</span>
+</div>
+<div class="formula-box">
+<strong><span data-ar="نظرية القيمة الوسطية (IVT):" data-en="Intermediate Value Theorem (IVT):">نظرية القيمة الوسطية (IVT):</span></strong><br>
+<span data-ar="إذا f متصلة على [a,b] و k بين f(a) و f(b)" data-en="If f continuous on [a,b] and k between f(a) and f(b)">إذا f متصلة على [a,b] و k بين f(a) و f(b)</span><br>
+<span data-ar="فإن ∃c ∈ (a,b): f(c) = k" data-en="Then ∃c ∈ (a,b): f(c) = k">فإن ∃c ∈ (a,b): f(c) = k</span>
+</div>
+<div class="formula-box">
+<strong><span data-ar="الأصفار التقريبية:" data-en="Approximate Zeros:">الأصفار التقريبية:</span></strong><br>
+<span data-ar="إذا f(a)·f(b) < 0" data-en="If f(a)·f(b) < 0">إذا f(a)·f(b) < 0</span><br>
+<span data-ar="يوجد صفر في (a,b)" data-en="There is a zero in (a,b)">يوجد صفر في (a,b)</span>
+</div>
+</div>
+</div>
+
+<main class="max-w-5xl mx-auto space-y-8" id="exam-content"></main>
+
+<div class="text-center no-print pb-8 mt-8">
+<button onclick="gradeExam()" class="bg-gradient-to-r from-amber-700 to-orange-600 hover:from-amber-800 hover:to-orange-700 text-white text-lg px-12 py-4 rounded-2xl font-bold shadow-xl transition transform hover:scale-105">🎯 <span data-ar="صحح إجاباتي!" data-en="Grade My Exam!">صحح إجاباتي!</span></button>
+</div>
+
+<div id="results-panel" class="max-w-5xl mx-auto mt-8 bg-white p-8 rounded-3xl shadow-2xl border-4 border-amber-500 hidden no-print">
+<h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">🏆 <span data-ar="نتيجتك يا بطل!" data-en="Your Result, Champion!">نتيجتك يا بطل!</span> 🏆</h2>
+<div class="grid md:grid-cols-3 gap-4 mb-6">
+<div class="bg-amber-50 p-4 rounded-xl text-center"><p>😊 <span data-ar="الاسم" data-en="Name">الاسم</span></p><p id="res-name" class="font-bold text-xl text-amber-700">-</p></div>
+<div class="bg-orange-50 p-4 rounded-xl text-center"><p>📅 <span data-ar="التاريخ" data-en="Date">التاريخ</span></p><p id="res-date" class="font-bold text-xl text-orange-700">-</p></div>
+<div class="bg-amber-50 p-4 rounded-xl text-center"><p>🌟 <span data-ar="المجموع" data-en="Total">المجموع</span></p><p id="res-total" class="font-bold text-3xl text-amber-700">0 / 100</p></div>
+</div>
+<div class="text-center mb-6">
+<span id="success-badge" class="success-badge grade-excellent">-</span>
+<p id="success-percent" class="text-4xl font-bold text-amber-700 mt-2">0%</p>
+<p class="text-sm text-gray-500"><span data-ar="نسبة النجاح" data-en="Success Rate">نسبة النجاح</span></p>
+</div>
+<div class="bg-gray-50 p-6 rounded-xl mb-6">
+<h3 class="font-bold text-lg mb-4 text-gray-800">📊 <span data-ar="أداؤك في كل قسم:" data-en="Your Performance by Section:">أداؤك في كل قسم:</span></h3>
+<div class="space-y-3" id="sections-performance"></div>
+</div>
+<div class="text-center">
+<button id="sendEmailBtn" onclick="sendResultsToEmail()" class="bg-gradient-to-r from-amber-700 to-orange-600 text-white text-lg px-8 py-3 rounded-2xl font-bold shadow-xl transition">📧 <span data-ar="أرسل النتيجة للمعلم" data-en="Send Result to Teacher">أرسل النتيجة للمعلم</span></button>
+<p id="emailStatus" class="text-sm mt-2 text-center font-medium"></p>
+</div>
+</div>
+
+<footer class="max-w-5xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
+© Limits, Continuity & IVT - Grade 11 Advanced | Mr. Mohammed Hesham 📐
+</footer>
+
+<script>
+const PUBLIC_KEY = "Rb3Lq8tXaFmc5YHUH";
+const SERVICE_ID = "service_w15m64i";
+const TEMPLATE_ID = "template_5b0u2tq";
+const TARGET_EMAIL = "mohammedhesham872@gmail.com";
+emailjs.init(PUBLIC_KEY);
+
+const STORAGE_KEY = 'limits_continuity_ivt_grade11_v1';
+const TOTAL_TIME = 5400;
+const TOTAL_QUESTIONS = 30;
+const TOTAL_SECTIONS = 6;
+const QUESTIONS_PER_SECTION = 5;
+
+let currentSeed = null;
+let answersVisible = false;
+let saveIndicatorTimeout = null;
+let currentLang = 'ar';
+let timeRemaining = TOTAL_TIME;
+let timerInterval;
+let examData;
+let correctAnswersMap = {};
+let rng = null;
+
+function mulberry32(a) {
+    return function() {
+        var t = a += 0x6D2B79F5;
+        t = Math.imul(t ^ t >>> 15, t | 1);
+        t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+        return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    }
+}
+
+function showSaveIndicator() {
+    const indicator = document.getElementById('saveIndicator');
+    indicator.classList.add('show');
+    if (saveIndicatorTimeout) clearTimeout(saveIndicatorTimeout);
+    saveIndicatorTimeout = setTimeout(() => indicator.classList.remove('show'), 1500);
+}
+
+function saveState(showIndicator = true) {
+    try {
+        const state = {
+            seed: currentSeed, lang: currentLang,
+            studentName: document.getElementById('studentName').value,
+            studentClass: document.getElementById('studentClass').value,
+            examDate: document.getElementById('examDate').value,
+            answers: getSelectedAnswers(),
+            timeRemaining: timeRemaining,
+            answersVisible: answersVisible, savedAt: Date.now()
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        if (showIndicator) showSaveIndicator();
+    } catch (e) { console.error('Save error:', e); }
+}
+
+function loadState() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : null;
+    } catch (e) { return null; }
+}
+
+function getSelectedAnswers() {
+    const answers = {};
+    for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+        const selected = document.querySelector('input[name="q'+i+'"]:checked');
+        if (selected) answers[i] = selected.value;
+    }
+    return answers;
+}
+
+function restoreAnswers(answers) {
+    if (!answers) return;
+    for (const [idx, val] of Object.entries(answers)) {
+        const radio = document.querySelector('input[name="q'+idx+'"][value="'+val+'"]');
+        if (radio) radio.checked = true;
+    }
+}
+
+function clearProgress() {
+    const msg = currentLang === 'ar' ? '⚠️ هل أنت متأكد من مسح كل التقدم؟' : '⚠️ Clear all progress?';
+    if (confirm(msg)) { localStorage.removeItem(STORAGE_KEY); location.reload(); }
+}
+
+function setupAnswerListeners() {
+    document.getElementById('exam-content').addEventListener('change', (e) => {
+        if (e.target.type === 'radio') saveState();
+    });
+}
+
+function setupInputListeners() {
+    ['studentName', 'studentClass', 'examDate'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener('input', () => saveState(false));
+            el.addEventListener('blur', () => saveState());
+        }
+    });
+}
+
+// ==================== SVG DIAGRAMS - ACCURATE GRAPHS ====================
+const svgGraphs = {
+    ex3A_rational: `<svg class="svg-graph" width="500" height="360" viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="490" height="350" rx="12" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="250" y="25" text-anchor="middle" font-size="14" fill="#92400e" font-weight="bold">3A. f(x) = (x²-6)/(x+4) on [-3, 4]</text>
+        <!-- Grid -->
+        <g stroke="#e5e7eb" stroke-width="0.5">
+            ${Array.from({length: 21}, (_, i) => `<line x1="${50 + i*20}" y1="40" x2="${50 + i*20}" y2="320"/>`).join('')}
+            ${Array.from({length: 15}, (_, i) => `<line x1="50" y1="${40 + i*20}" x2="450" y2="${40 + i*20}"/>`).join('')}
+        </g>
+        <!-- Axes -->
+        <line x1="50" y1="280" x2="460" y2="280" stroke="#374151" stroke-width="2" marker-end="url(#arrow3A)"/>
+        <line x1="130" y1="40" x2="130" y2="320" stroke="#374151" stroke-width="2" marker-end="url(#arrow3A)"/>
+        <text x="465" y="285" font-size="12" fill="#374151" font-weight="bold">x</text>
+        <text x="120" y="35" font-size="12" fill="#374151" font-weight="bold">y</text>
+        <text x="135" y="295" font-size="10" fill="#374151">O</text>
+        <!-- Scale marks -->
+        <text x="170" y="295" font-size="9" fill="#6b7280">1</text>
+        <text x="210" y="295" font-size="9" fill="#6b7280">2</text>
+        <text x="250" y="295" font-size="9" fill="#6b7280">3</text>
+        <text x="290" y="295" font-size="9" fill="#6b7280">4</text>
+        <text x="90" y="295" font-size="9" fill="#6b7280">-1</text>
+        <text x="50" y="295" font-size="9" fill="#6b7280">-2</text>
+        <text x="10" y="295" font-size="9" fill="#6b7280">-3</text>
+        <text x="115" y="260" font-size="9" fill="#6b7280">-1</text>
+        <text x="115" y="240" font-size="9" fill="#6b7280">-2</text>
+        <text x="115" y="300" font-size="9" fill="#6b7280">1</text>
+        <text x="115" y="320" font-size="9" fill="#6b7280">2</text>
+        <!-- Vertical asymptote at x=-4 (outside interval, shown for reference) -->
+        <line x1="50" y1="40" x2="50" y2="320" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="5"/>
+        <text x="30" y="50" font-size="9" fill="#dc2626" font-weight="bold">VA: x=-4</text>
+        <!-- Interval [-3, 4] highlighted -->
+        <rect x="90" y="40" width="320" height="240" fill="#fef3c7" opacity="0.3" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3"/>
+        <text x="250" y="55" text-anchor="middle" font-size="10" fill="#f59e0b" font-weight="bold">Interval [-3, 4]</text>
+        <!-- Curve: f(x) = (x²-6)/(x+4) -->
+        <!-- At x=-3: f(-3) = (9-6)/1 = 3 -->
+        <!-- At x=-2: f(-2) = (4-6)/2 = -1 -->
+        <!-- At x=-1: f(-1) = (1-6)/3 = -5/3 ≈ -1.67 -->
+        <!-- At x=0: f(0) = -6/4 = -1.5 -->
+        <!-- At x=1: f(1) = -5/5 = -1 -->
+        <!-- At x=2: f(2) = -2/6 = -1/3 ≈ -0.33 -->
+        <!-- At x=√6≈2.45: f=0 (zero) -->
+        <!-- At x=3: f(3) = 3/7 ≈ 0.43 -->
+        <!-- At x=4: f(4) = 10/8 = 1.25 -->
+        <path d="M 90 220 Q 110 260 130 290 Q 150 305 170 300 Q 190 295 210 288 Q 230 282 250 278 Q 270 275 290 273 Q 310 272 330 270 Q 350 268 370 265 Q 390 260 410 250" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+        <!-- Zero at x=√6 ≈ 2.45 -->
+        <circle cx="248" cy="280" r="5" fill="#dc2626"/>
+        <text x="255" y="295" font-size="9" fill="#dc2626" font-weight="bold">Zero: x≈2.45</text>
+        <!-- Endpoint values -->
+        <circle cx="90" cy="220" r="4" fill="#16a34a"/>
+        <text x="70" y="215" font-size="9" fill="#16a34a" font-weight="bold">f(-3)=3</text>
+        <circle cx="410" cy="250" r="4" fill="#16a34a"/>
+        <text x="415" y="245" font-size="9" fill="#16a34a" font-weight="bold">f(4)=1.25</text>
+        <!-- Sign change indicator -->
+        <text x="250" y="340" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">f(-3)=3 > 0 and f(4)=1.25 > 0, but f(0)=-1.5 < 0 → Zero exists in (-3, 4)</text>
+        <defs><marker id="arrow3A" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#374151"/></marker></defs>
+    </svg>`,
+    
+    ex3B_cubic: `<svg class="svg-graph" width="500" height="360" viewBox="0 0 500 360" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="490" height="350" rx="12" fill="#dbeafe" stroke="#2563eb" stroke-width="2"/>
+        <text x="250" y="25" text-anchor="middle" font-size="14" fill="#1e40af" font-weight="bold">3B. f(x) = 8x³ - 2x² - 5x - 1 on [-5, 0]</text>
+        <!-- Grid -->
+        <g stroke="#e5e7eb" stroke-width="0.5">
+            ${Array.from({length: 21}, (_, i) => `<line x1="${50 + i*20}" y1="40" x2="${50 + i*20}" y2="320"/>`).join('')}
+            ${Array.from({length: 15}, (_, i) => `<line x1="50" y1="${40 + i*20}" x2="450" y2="${40 + i*20}"/>`).join('')}
+        </g>
+        <!-- Axes -->
+        <line x1="50" y1="200" x2="460" y2="200" stroke="#374151" stroke-width="2" marker-end="url(#arrow3B)"/>
+        <line x1="410" y1="40" x2="410" y2="320" stroke="#374151" stroke-width="2" marker-end="url(#arrow3B)"/>
+        <text x="465" y="205" font-size="12" fill="#374151" font-weight="bold">x</text>
+        <text x="400" y="35" font-size="12" fill="#374151" font-weight="bold">y</text>
+        <text x="415" y="215" font-size="10" fill="#374151">O</text>
+        <!-- Scale marks -->
+        <text x="370" y="215" font-size="9" fill="#6b7280">-1</text>
+        <text x="330" y="215" font-size="9" fill="#6b7280">-2</text>
+        <text x="290" y="215" font-size="9" fill="#6b7280">-3</text>
+        <text x="250" y="215" font-size="9" fill="#6b7280">-4</text>
+        <text x="210" y="215" font-size="9" fill="#6b7280">-5</text>
+        <text x="170" y="215" font-size="9" fill="#6b7280">-6</text>
+        <text x="130" y="215" font-size="9" fill="#6b7280">-7</text>
+        <text x="90" y="215" font-size="9" fill="#6b7280">-8</text>
+        <text x="50" y="215" font-size="9" fill="#6b7280">-9</text>
+        <text x="415" y="180" font-size="9" fill="#6b7280">1</text>
+        <text x="415" y="160" font-size="9" fill="#6b7280">2</text>
+        <text x="415" y="220" font-size="9" fill="#6b7280">-1</text>
+        <text x="415" y="240" font-size="9" fill="#6b7280">-2</text>
+        <!-- Interval [-5, 0] highlighted -->
+        <rect x="210" y="40" width="200" height="160" fill="#dbeafe" opacity="0.3" stroke="#2563eb" stroke-width="1" stroke-dasharray="3"/>
+        <text x="310" y="55" text-anchor="middle" font-size="10" fill="#2563eb" font-weight="bold">Interval [-5, 0]</text>
+        <!-- Cubic curve: 8x³ - 2x² - 5x - 1 -->
+        <!-- At x=-5: f(-5) = -1000-50+25-1 = -1026 (way below) -->
+        <!-- At x=-1: f(-1) = -8-2+5-1 = -6 -->
+        <!-- At x=-0.5: f(-0.5) = -1-0.5+2.5-1 = 0 -->
+        <!-- At x=0: f(0) = -1 -->
+        <!-- The curve comes from very negative, crosses zero around x=-0.5, ends at -1 -->
+        <path d="M 50 320 Q 100 310 150 290 Q 200 270 250 240 Q 300 210 350 190 Q 380 180 400 175 Q 405 173 410 172" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+        <!-- Zero at x=-0.5 -->
+        <circle cx="400" cy="200" r="5" fill="#dc2626"/>
+        <text x="370" y="195" font-size="9" fill="#dc2626" font-weight="bold">Zero: x=-0.5</text>
+        <!-- Endpoint values -->
+        <circle cx="210" cy="310" r="4" fill="#16a34a"/>
+        <text x="180" y="325" font-size="9" fill="#16a34a" font-weight="bold">f(-5)=-1026</text>
+        <circle cx="410" cy="220" r="4" fill="#16a34a"/>
+        <text x="415" y="235" font-size="9" fill="#16a34a" font-weight="bold">f(0)=-1</text>
+        <text x="250" y="340" text-anchor="middle" font-size="11" fill="#1e40af" font-weight="bold">f(-5)=-1026 < 0 and f(0)=-1 < 0, but f(-0.5)=0 → Zero at x=-0.5</text>
+        <defs><marker id="arrow3B" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#374151"/></marker></defs>
+    </svg>`,
+    
+    ivt_theorem: `<svg class="svg-graph" width="450" height="300" viewBox="0 0 450 300" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="440" height="290" rx="12" fill="#fce7f3" stroke="#ec4899" stroke-width="2"/>
+        <text x="225" y="25" text-anchor="middle" font-size="14" fill="#9f1239" font-weight="bold">📐 نظرية القيمة الوسطية - IVT</text>
+        <!-- Axes -->
+        <line x1="50" y1="240" x2="420" y2="240" stroke="#374151" stroke-width="2" marker-end="url(#arrowIVT)"/>
+        <line x1="100" y1="40" x2="100" y2="240" stroke="#374151" stroke-width="2" marker-end="url(#arrowIVT)"/>
+        <text x="425" y="245" font-size="12" fill="#374151" font-weight="bold">x</text>
+        <text x="90" y="35" font-size="12" fill="#374151" font-weight="bold">y</text>
+        <!-- Interval [a, b] -->
+        <line x1="150" y1="240" x2="350" y2="240" stroke="#16a34a" stroke-width="3"/>
+        <text x="150" y="260" text-anchor="middle" font-size="11" fill="#16a34a" font-weight="bold">a</text>
+        <text x="350" y="260" text-anchor="middle" font-size="11" fill="#16a34a" font-weight="bold">b</text>
+        <!-- Function curve -->
+        <path d="M 150 180 Q 200 100 250 120 Q 300 140 350 80" fill="none" stroke="#7c3aed" stroke-width="3"/>
+        <text x="300" y="70" font-size="11" fill="#7c3aed" font-weight="bold">f(x) continuous</text>
+        <!-- f(a) and f(b) -->
+        <circle cx="150" cy="180" r="5" fill="#dc2626"/>
+        <text x="130" y="175" font-size="10" fill="#dc2626" font-weight="bold">f(a)</text>
+        <circle cx="350" cy="80" r="5" fill="#dc2626"/>
+        <text x="360" y="75" font-size="10" fill="#dc2626" font-weight="bold">f(b)</text>
+        <!-- Value k between f(a) and f(b) -->
+        <line x1="100" y1="130" x2="400" y2="130" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4"/>
+        <text x="405" y="135" font-size="10" fill="#f59e0b" font-weight="bold">k</text>
+        <!-- Point c where f(c) = k -->
+        <circle cx="270" cy="130" r="5" fill="#f59e0b"/>
+        <text x="270" y="150" text-anchor="middle" font-size="10" fill="#f59e0b" font-weight="bold">c</text>
+        <line x1="270" y1="130" x2="270" y2="240" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3"/>
+        <text x="270" y="255" text-anchor="middle" font-size="10" fill="#f59e0b" font-weight="bold">f(c) = k</text>
+        <text x="225" y="280" text-anchor="middle" font-size="11" fill="#9f1239">If f continuous on [a,b] and k between f(a) and f(b), then ∃c ∈ (a,b): f(c) = k</text>
+        <defs><marker id="arrowIVT" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#374151"/></marker></defs>
+    </svg>`,
+    
+    continuity_concept: `<svg class="svg-graph" width="450" height="280" viewBox="0 0 450 280" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="440" height="270" rx="12" fill="#ecfdf5" stroke="#10b981" stroke-width="2"/>
+        <text x="225" y="25" text-anchor="middle" font-size="14" fill="#065f46" font-weight="bold">📐 الاتصال باستخدام النهايات</text>
+        <!-- Three conditions boxes -->
+        <rect x="20" y="45" width="400" height="50" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="220" y="65" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">Condition 1: f(a) is defined (معرّفة)</text>
+        <text x="220" y="85" text-anchor="middle" font-size="10" fill="#065f46">✓ f(a) exists</text>
+        <rect x="20" y="105" width="400" height="50" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="220" y="125" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">Condition 2: lim(x→a) f(x) exists (موجودة)</text>
+        <text x="220" y="145" text-anchor="middle" font-size="10" fill="#065f46">✓ Left limit = Right limit</text>
+        <rect x="20" y="165" width="400" height="50" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="2"/>
+        <text x="220" y="185" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">Condition 3: lim(x→a) f(x) = f(a) (متساويان)</text>
+        <text x="220" y="205" text-anchor="middle" font-size="10" fill="#065f46">✓ Limit equals function value</text>
+        <rect x="20" y="225" width="400" height="40" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="250" text-anchor="middle" font-size="12" fill="#92400e" font-weight="bold">All three conditions → f is continuous at x = a</text>
+    </svg>`,
+    
+    zero_finding_process: `<svg class="svg-graph" width="450" height="320" viewBox="0 0 450 320" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="440" height="310" rx="12" fill="#ede9fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="225" y="25" text-anchor="middle" font-size="14" fill="#5b21b6" font-weight="bold">🎯 إيجاد الأصفار التقريبية - Finding Approximate Zeros</text>
+        <!-- Step 1 -->
+        <rect x="20" y="45" width="400" height="50" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="220" y="65" text-anchor="middle" font-size="11" fill="#5b21b6" font-weight="bold">Step 1: Evaluate f at endpoints of interval</text>
+        <text x="220" y="85" text-anchor="middle" font-size="10" fill="#5b21b6">احسب f(a) و f(b) عند طرفي الفترة</text>
+        <!-- Step 2 -->
+        <rect x="20" y="105" width="400" height="50" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="220" y="125" text-anchor="middle" font-size="11" fill="#5b21b6" font-weight="bold">Step 2: Check if f(a) and f(b) have opposite signs</text>
+        <text x="220" y="145" text-anchor="middle" font-size="10" fill="#5b21b6">تحقق من اختلاف إشارتي f(a) و f(b)</text>
+        <!-- Step 3 -->
+        <rect x="20" y="165" width="400" height="50" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="220" y="185" text-anchor="middle" font-size="11" fill="#5b21b6" font-weight="bold">Step 3: If f(a)·f(b) < 0, zero exists in (a,b) by IVT</text>
+        <text x="220" y="205" text-anchor="middle" font-size="10" fill="#5b21b6">إذا f(a)·f(b) < 0، يوجد صفر في (a,b) بنظرية القيمة الوسطية</text>
+        <!-- Step 4 -->
+        <rect x="20" y="225" width="400" height="50" rx="6" fill="#ddd6fe" stroke="#7c3aed" stroke-width="2"/>
+        <text x="220" y="245" text-anchor="middle" font-size="11" fill="#5b21b6" font-weight="bold">Step 4: Narrow down interval by testing midpoints</text>
+        <text x="220" y="265" text-anchor="middle" font-size="10" fill="#5b21b6">ضيّق الفترة باختبار نقاط المنتصف</text>
+        <rect x="20" y="285" width="400" height="25" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
+        <text x="220" y="302" text-anchor="middle" font-size="10" fill="#92400e" font-weight="bold">Continue until desired accuracy (e.g., nearest 0.5)</text>
+    </svg>`,
+    
+    sign_change_diagram: `<svg class="svg-graph" width="450" height="260" viewBox="0 0 450 260" xmlns="http://www.w3.org/2000/svg">
+        <rect x="5" y="5" width="440" height="250" rx="12" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+        <text x="225" y="25" text-anchor="middle" font-size="14" fill="#991b1b" font-weight="bold">🔍 تغيير الإشارة - Sign Change</text>
+        <!-- Axes -->
+        <line x1="50" y1="200" x2="420" y2="200" stroke="#374151" stroke-width="2" marker-end="url(#arrowSC)"/>
+        <line x1="100" y1="40" x2="100" y2="220" stroke="#374151" stroke-width="2" marker-end="url(#arrowSC)"/>
+        <text x="425" y="205" font-size="12" fill="#374151" font-weight="bold">x</text>
+        <text x="90" y="35" font-size="12" fill="#374151" font-weight="bold">y</text>
+        <!-- x-axis label -->
+        <text x="250" y="220" text-anchor="middle" font-size="10" fill="#374151">y = 0 (x-axis)</text>
+        <!-- Curve crossing x-axis -->
+        <path d="M 60 150 Q 120 100 180 120 Q 220 140 250 180 Q 280 220 320 200 Q 360 180 400 160" fill="none" stroke="#dc2626" stroke-width="3"/>
+        <!-- Zero crossing point -->
+        <circle cx="260" cy="200" r="6" fill="#16a34a"/>
+        <text x="260" y="225" text-anchor="middle" font-size="10" fill="#16a34a" font-weight="bold">Zero (c, 0)</text>
+        <!-- Positive region -->
+        <text x="150" y="90" font-size="11" fill="#16a34a" font-weight="bold">f(x) > 0</text>
+        <!-- Negative region -->
+        <text x="330" y="215" font-size="11" fill="#dc2626" font-weight="bold">f(x) < 0</text>
+        <!-- Interval markers -->
+        <text x="80" y="240" font-size="10" fill="#5b21b6" font-weight="bold">a</text>
+        <text x="400" y="240" font-size="10" fill="#5b21b6" font-weight="bold">b</text>
+        <text x="225" y="255" text-anchor="middle" font-size="11" fill="#991b1b">If f(a) > 0 and f(b) < 0 (or vice versa), zero exists in (a,b)</text>
+        <defs><marker id="arrowSC" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#374151"/></marker></defs>
+    </svg>`
+};
+
+// ==================== EXAM DATA - 30 QUESTIONS ====================
+const originalExamData = {
+    sections: [
+        {
+            id: 'sec1',
+            title: { ar: '🔹 القسم 1: مفاهيم الاتصال والنهايات (Q1-Q5)', en: '🔹 Section 1: Continuity & Limits Concepts (Q1-Q5)' },
+            questions: [
+                {
+                    q: { ar: '<strong>س1:</strong> ما شرط اتصال الدالة f عند x = a باستخدام النهايات؟', en: '<strong>Q1:</strong> What is the condition for f to be continuous at x = a using limits?' },
+                    svg: svgGraphs.continuity_concept,
+                    options: [
+                        { ar: '<span class="math-display">lim(x→a) f(x) = f(a)</span>', en: '<span class="math-display">lim(x→a) f(x) = f(a)</span>' },
+                        { ar: '<span class="math-display">lim(x→a) f(x) = 0</span>', en: '<span class="math-display">lim(x→a) f(x) = 0</span>' },
+                        { ar: '<span class="math-display">f(a) = 0</span>', en: '<span class="math-display">f(a) = 0</span>' },
+                        { ar: '<span class="math-display">lim(x→a) f(x) = a</span>', en: '<span class="math-display">lim(x→a) f(x) = a</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'اتصال عند x=a يتطلب: lim(x→a) f(x) = f(a) (النهاية تساوي قيمة الدالة)', en: 'Continuity at x=a requires: lim(x→a) f(x) = f(a) (limit equals function value)' }
+                },
+                {
+                    q: { ar: '<strong>س2:</strong> كم عدد شروط الاتصال عند نقطة؟', en: '<strong>Q2:</strong> How many conditions for continuity at a point?' },
+                    options: [
+                        { ar: '3 شروط', en: '3 conditions' },
+                        { ar: 'شرطان', en: '2 conditions' },
+                        { ar: 'شرط واحد', en: '1 condition' },
+                        { ar: '4 شروط', en: '4 conditions' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '3 شروط: 1) f(a) معرّفة، 2) النهاية موجودة، 3) النهاية = f(a)', en: '3 conditions: 1) f(a) defined, 2) limit exists, 3) limit = f(a)' }
+                },
+                {
+                    q: { ar: '<strong>س3:</strong> إذا كان lim(x→2) f(x) = 5 و f(2) = 5، فإن f:', en: '<strong>Q3:</strong> If lim(x→2) f(x) = 5 and f(2) = 5, then f is:' },
+                    options: [
+                        { ar: 'متصلة عند x = 2', en: 'Continuous at x = 2' },
+                        { ar: 'غير متصلة عند x = 2', en: 'Discontinuous at x = 2' },
+                        { ar: 'غير معرّفة عند x = 2', en: 'Undefined at x = 2' },
+                        { ar: 'لا يمكن التحديد', en: 'Cannot determine' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'النهاية = قيمة الدالة = 5، إذن متصلة عند x = 2', en: 'Limit = function value = 5, so continuous at x = 2' }
+                },
+                {
+                    q: { ar: '<strong>س4:</strong> إذا كان lim(x→3) f(x) = 7 و f(3) = 4، فإن f:', en: '<strong>Q4:</strong> If lim(x→3) f(x) = 7 and f(3) = 4, then f is:' },
+                    options: [
+                        { ar: 'غير متصلة عند x = 3 (النهاية ≠ قيمة الدالة)', en: 'Discontinuous at x = 3 (limit ≠ function value)' },
+                        { ar: 'متصلة عند x = 3', en: 'Continuous at x = 3' },
+                        { ar: 'غير معرّفة عند x = 3', en: 'Undefined at x = 3' },
+                        { ar: 'ثابتة', en: 'Constant' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'النهاية (7) ≠ قيمة الدالة (4)، إذن غير متصلة عند x = 3', en: 'Limit (7) ≠ function value (4), so discontinuous at x = 3' }
+                },
+                {
+                    q: { ar: '<strong>س5:</strong> الدالة كثيرة الحدود (polynomial) تكون:', en: '<strong>Q5:</strong> A polynomial function is:' },
+                    options: [
+                        { ar: 'متصلة على كل الأعداد الحقيقية R', en: 'Continuous on all real numbers R' },
+                        { ar: 'متصلة فقط على فترة محددة', en: 'Continuous only on a specific interval' },
+                        { ar: 'غير متصلة عند بعض النقاط', en: 'Discontinuous at some points' },
+                        { ar: 'متصلة فقط عند الأعداد الصحيحة', en: 'Continuous only at integers' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'كثيرات الحدود متصلة على كل R (لا توجد نقاط انقطاع)', en: 'Polynomials are continuous on all R (no discontinuities)' }
+                }
+            ]
+        },
+        {
+            id: 'sec2',
+            title: { ar: '🔹 القسم 2: تمرين 3A - f(x) = (x²-6)/(x+4) على [-3, 4] (Q6-Q10)', en: '🔹 Section 2: Exercise 3A - f(x) = (x²-6)/(x+4) on [-3, 4] (Q6-Q10)' },
+            questions: [
+                {
+                    q: { ar: '<strong>تمرين 3A:</strong> f(x) = (x²-6)/(x+4). ما قيمة f(-3)؟', en: '<strong>Exercise 3A:</strong> f(x) = (x²-6)/(x+4). What is f(-3)?' },
+                    svg: svgGraphs.ex3A_rational,
+                    options: [
+                        { ar: '<span class="math-display">3</span>', en: '<span class="math-display">3</span>' },
+                        { ar: '<span class="math-display">-3</span>', en: '<span class="math-display">-3</span>' },
+                        { ar: '<span class="math-display">1</span>', en: '<span class="math-display">1</span>' },
+                        { ar: '<span class="math-display">-1</span>', en: '<span class="math-display">-1</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'f(-3) = ((-3)²-6)/(-3+4) = (9-6)/1 = 3/1 = 3', en: 'f(-3) = (9-6)/1 = 3' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 3A:</strong> ما قيمة f(4)؟', en: '<strong>Exercise 3A:</strong> What is f(4)?' },
+                    options: [
+                        { ar: '<span class="math-display">1.25</span> أو <span class="math-display">5/4</span>', en: '<span class="math-display">1.25</span> or <span class="math-display">5/4</span>' },
+                        { ar: '<span class="math-display">2</span>', en: '<span class="math-display">2</span>' },
+                        { ar: '<span class="math-display">10</span>', en: '<span class="math-display">10</span>' },
+                        { ar: '<span class="math-display">0.5</span>', en: '<span class="math-display">0.5</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'f(4) = (16-6)/(4+4) = 10/8 = 5/4 = 1.25', en: 'f(4) = (16-6)/8 = 10/8 = 1.25' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 3A:</strong> ما قيمة f(0)؟', en: '<strong>Exercise 3A:</strong> What is f(0)?' },
+                    options: [
+                        { ar: '<span class="math-display">-1.5</span> أو <span class="math-display">-3/2</span>', en: '<span class="math-display">-1.5</span> or <span class="math-display">-3/2</span>' },
+                        { ar: '<span class="math-display">-6</span>', en: '<span class="math-display">-6</span>' },
+                        { ar: '<span class="math-display">0</span>', en: '<span class="math-display">0</span>' },
+                        { ar: '<span class="math-display">4</span>', en: '<span class="math-display">4</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'f(0) = (0-6)/(0+4) = -6/4 = -3/2 = -1.5', en: 'f(0) = -6/4 = -1.5' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 3A:</strong> هل f(x) = (x²-6)/(x+4) متصلة على [-3, 4]؟', en: '<strong>Exercise 3A:</strong> Is f(x) = (x²-6)/(x+4) continuous on [-3, 4]?' },
+                    options: [
+                        { ar: 'نعم، لأن x = -4 (نقطة الانقطاع) خارج الفترة [-3, 4]', en: 'Yes, because x = -4 (discontinuity) is outside [-3, 4]' },
+                        { ar: 'لا، لأن الدالة كسرية', en: 'No, because it is rational' },
+                        { ar: 'لا، لأن المقام يساوي صفر', en: 'No, because denominator equals zero' },
+                        { ar: 'لا يمكن التحديد', en: 'Cannot determine' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'نعم، المتقطع الوحيد عند x = -4 وهو خارج الفترة [-3, 4]، إذن f متصلة على [-3, 4]', en: 'Yes, only discontinuity at x = -4 which is outside [-3, 4], so f is continuous on [-3, 4]' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 3A:</strong> أين يقع الصفر التقريبي لـ f(x) = (x²-6)/(x+4) على [-3, 4]؟', en: '<strong>Exercise 3A:</strong> Where is the approximate zero of f(x) = (x²-6)/(x+4) on [-3, 4]?' },
+                    options: [
+                        { ar: '<span class="math-display">x ≈ 2.45</span> (بين 2 و 3)', en: '<span class="math-display">x ≈ 2.45</span> (between 2 and 3)' },
+                        { ar: '<span class="math-display">x ≈ -2.45</span>', en: '<span class="math-display">x ≈ -2.45</span>' },
+                        { ar: '<span class="math-display">x ≈ 0</span>', en: '<span class="math-display">x ≈ 0</span>' },
+                        { ar: '<span class="math-display">x ≈ 4</span>', en: '<span class="math-display">x ≈ 4</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'x² - 6 = 0 → x = √6 ≈ 2.45. والتحقق: f(2) = -2/6 < 0, f(3) = 3/7 > 0، إذن الصفر بين 2 و 3', en: 'x² - 6 = 0 → x = √6 ≈ 2.45. Check: f(2) < 0, f(3) > 0, so zero between 2 and 3' }
+                }
+            ]
+        },
+        {
+            id: 'sec3',
+            title: { ar: '🔹 القسم 3: تمرين 3B - f(x) = 8x³ - 2x² - 5x - 1 على [-5, 0] (Q11-Q15)', en: '🔹 Section 3: Exercise 3B - f(x) = 8x³ - 2x² - 5x - 1 on [-5, 0] (Q11-Q15)' },
+            questions: [
+                {
+                    q: { ar: '<strong>تمرين 3B:</strong> f(x) = 8x³ - 2x² - 5x - 1. ما قيمة f(0)؟', en: '<strong>Exercise 3B:</strong> f(x) = 8x³ - 2x² - 5x - 1. What is f(0)?' },
+                    svg: svgGraphs.ex3B_cubic,
+                    options: [
+                        { ar: '<span class="math-display">-1</span>', en: '<span class="math-display">-1</span>' },
+                        { ar: '<span class="math-display">0</span>', en: '<span class="math-display">0</span>' },
+                        { ar: '<span class="math-display">1</span>', en: '<span class="math-display">1</span>' },
+                        { ar: '<span class="math-display">-5</span>', en: '<span class="math-display">-5</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'f(0) = 8(0) - 2(0) - 5(0) - 1 = -1', en: 'f(0) = -1' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 3B:</strong> ما قيمة f(-1)؟', en: '<strong>Exercise 3B:</strong> What is f(-1)?' },
+                    options: [
+                        { ar: '<span class="math-display">-6</span>', en: '<span class="math-display">-6</span>' },
+                        { ar: '<span class="math-display">6</span>', en: '<span class="math-display">6</span>' },
+                        { ar: '<span class="math-display">0</span>', en: '<span class="math-display">0</span>' },
+                        { ar: '<span class="math-display">-1</span>', en: '<span class="math-display">-1</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'f(-1) = 8(-1) - 2(1) - 5(-1) - 1 = -8 - 2 + 5 - 1 = -6', en: 'f(-1) = -8 - 2 + 5 - 1 = -6' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 3B:</strong> ما قيمة f(-0.5)؟', en: '<strong>Exercise 3B:</strong> What is f(-0.5)?' },
+                    options: [
+                        { ar: '<span class="math-display">0</span>', en: '<span class="math-display">0</span>' },
+                        { ar: '<span class="math-display">-1</span>', en: '<span class="math-display">-1</span>' },
+                        { ar: '<span class="math-display">1</span>', en: '<span class="math-display">1</span>' },
+                        { ar: '<span class="math-display">-0.5</span>', en: '<span class="math-display">-0.5</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'f(-0.5) = 8(-0.125) - 2(0.25) - 5(-0.5) - 1 = -1 - 0.5 + 2.5 - 1 = 0', en: 'f(-0.5) = -1 - 0.5 + 2.5 - 1 = 0' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 3B:</strong> هل f(x) = 8x³ - 2x² - 5x - 1 متصلة على [-5, 0]؟', en: '<strong>Exercise 3B:</strong> Is f(x) = 8x³ - 2x² - 5x - 1 continuous on [-5, 0]?' },
+                    options: [
+                        { ar: 'نعم، لأنها كثيرة حدود', en: 'Yes, because it is a polynomial' },
+                        { ar: 'لا، لأنها تحتوي على مقام', en: 'No, because it has a denominator' },
+                        { ar: 'لا، لأنها غير معرّفة عند بعض النقاط', en: 'No, because undefined at some points' },
+                        { ar: 'لا يمكن التحديد', en: 'Cannot determine' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'نعم، كثيرات الحدود متصلة على كل R، إذن متصلة على [-5, 0]', en: 'Yes, polynomials are continuous on all R, so continuous on [-5, 0]' }
+                },
+                {
+                    q: { ar: '<strong>تمرين 3B:</strong> أين يقع الصفر التقريبي لـ f(x) = 8x³ - 2x² - 5x - 1 على [-5, 0]؟', en: '<strong>Exercise 3B:</strong> Where is the approximate zero of f(x) = 8x³ - 2x² - 5x - 1 on [-5, 0]?' },
+                    options: [
+                        { ar: '<span class="math-display">x = -0.5</span>', en: '<span class="math-display">x = -0.5</span>' },
+                        { ar: '<span class="math-display">x = -1</span>', en: '<span class="math-display">x = -1</span>' },
+                        { ar: '<span class="math-display">x = 0</span>', en: '<span class="math-display">x = 0</span>' },
+                        { ar: '<span class="math-display">x = -2</span>', en: '<span class="math-display">x = -2</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'f(-0.5) = 0، إذن الصفر عند x = -0.5', en: 'f(-0.5) = 0, so zero at x = -0.5' }
+                }
+            ]
+        },
+        {
+            id: 'sec4',
+            title: { ar: '🔹 القسم 4: نظرية القيمة الوسطية IVT (Q16-Q20)', en: '🔹 Section 4: Intermediate Value Theorem IVT (Q16-Q20)' },
+            questions: [
+                {
+                    q: { ar: '<strong>س16:</strong> ما الذي تتطلبه نظرية القيمة الوسطية (IVT)؟', en: '<strong>Q16:</strong> What does the Intermediate Value Theorem (IVT) require?' },
+                    svg: svgGraphs.ivt_theorem,
+                    options: [
+                        { ar: 'f متصلة على [a,b] و k بين f(a) و f(b)', en: 'f continuous on [a,b] and k between f(a) and f(b)' },
+                        { ar: 'f قابلة للاشتقاق على (a,b)', en: 'f differentiable on (a,b)' },
+                        { ar: 'f(a) = f(b)', en: 'f(a) = f(b)' },
+                        { ar: 'f خطية', en: 'f is linear' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'IVT تتطلب: f متصلة على [a,b] و k قيمة بين f(a) و f(b)', en: 'IVT requires: f continuous on [a,b] and k value between f(a) and f(b)' }
+                },
+                {
+                    q: { ar: '<strong>س17:</strong> إذا كانت f متصلة على [1, 5] و f(1) = -2 و f(5) = 3، فما الذي تضمنه IVT؟', en: '<strong>Q17:</strong> If f continuous on [1, 5] and f(1) = -2, f(5) = 3, what does IVT guarantee?' },
+                    options: [
+                        { ar: 'يوجد c ∈ (1, 5) حيث f(c) = 0', en: 'There exists c ∈ (1, 5) where f(c) = 0' },
+                        { ar: 'f(x) = 0 لكل x ∈ [1, 5]', en: 'f(x) = 0 for all x ∈ [1, 5]' },
+                        { ar: 'f(3) = 0', en: 'f(3) = 0' },
+                        { ar: 'لا شيء', en: 'Nothing' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '0 بين -2 و 3، و f متصلة، إذن ∃c ∈ (1, 5): f(c) = 0 (صفر في الفترة)', en: '0 is between -2 and 3, f is continuous, so ∃c ∈ (1, 5): f(c) = 0 (zero in interval)' }
+                },
+                {
+                    q: { ar: '<strong>س18:</strong> إذا كانت f متصلة على [0, 4] و f(0) = 5 و f(4) = 5، هل تضمن IVT وجود صفر؟', en: '<strong>Q18:</strong> If f continuous on [0, 4] and f(0) = 5, f(4) = 5, does IVT guarantee a zero?' },
+                    options: [
+                        { ar: 'لا، لأن 0 ليس بين f(0) و f(4) (كلاهما 5)', en: 'No, because 0 is not between f(0) and f(4) (both are 5)' },
+                        { ar: 'نعم، دائماً', en: 'Yes, always' },
+                        { ar: 'نعم، لأن f(0) = f(4)', en: 'Yes, because f(0) = f(4)' },
+                        { ar: 'لا يمكن التحديد', en: 'Cannot determine' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'لا، IVT تضمن وجود k بين f(a) و f(b). هنا 0 ليس بين 5 و 5', en: 'No, IVT guarantees k between f(a) and f(b). Here 0 is not between 5 and 5' }
+                },
+                {
+                    q: { ar: '<strong>س19:</strong> f متصلة على [2, 6]، f(2) = -3, f(6) = 4. لأي قيمة k تضمن IVT وجود c حيث f(c) = k؟', en: '<strong>Q19:</strong> f continuous on [2, 6], f(2) = -3, f(6) = 4. For which k does IVT guarantee c where f(c) = k?' },
+                    options: [
+                        { ar: '<span class="math-display">k = 0</span> (لأن 0 بين -3 و 4)', en: '<span class="math-display">k = 0</span> (because 0 is between -3 and 4)' },
+                        { ar: '<span class="math-display">k = 5</span>', en: '<span class="math-display">k = 5</span>' },
+                        { ar: '<span class="math-display">k = -4</span>', en: '<span class="math-display">k = -4</span>' },
+                        { ar: '<span class="math-display">k = 10</span>', en: '<span class="math-display">k = 10</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '0 بين -3 و 4، إذن IVT تضمن وجود c ∈ (2, 6): f(c) = 0', en: '0 is between -3 and 4, so IVT guarantees c ∈ (2, 6): f(c) = 0' }
+                },
+                {
+                    q: { ar: '<strong>س20:</strong> ما الفائدة الرئيسية من IVT في إيجاد الأصفار؟', en: '<strong>Q20:</strong> What is the main benefit of IVT in finding zeros?' },
+                    svg: svgGraphs.zero_finding_process,
+                    options: [
+                        { ar: 'تؤكد وجود صفر في فترة عند تغير الإشارة', en: 'Confirms zero exists in interval when sign changes' },
+                        { ar: 'تعطي القيمة الدقيقة للصفر', en: 'Gives exact zero value' },
+                        { ar: 'تحدد عدد الأصفار', en: 'Determines number of zeros' },
+                        { ar: 'لا فائدة لها', en: 'No benefit' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'IVT تؤكد وجود صفر (أو أي قيمة k) في الفترة عندما تتغير الإشارة', en: 'IVT confirms zero (or any value k) exists in interval when sign changes' }
+                }
+            ]
+        },
+        {
+            id: 'sec5',
+            title: { ar: '🔹 القسم 5: الأصفار التقريبية (Q21-Q25)', en: '🔹 Section 5: Approximate Zeros (Q21-Q25)' },
+            questions: [
+                {
+                    q: { ar: '<strong>س21:</strong> f(x) = x² - 4 على [0, 3]. f(0) = -4, f(3) = 5. أين الصفر التقريبي؟', en: '<strong>Q21:</strong> f(x) = x² - 4 on [0, 3]. f(0) = -4, f(3) = 5. Where is approximate zero?' },
+                    svg: svgGraphs.sign_change_diagram,
+                    options: [
+                        { ar: '<span class="math-display">x = 2</span> (لأن 2² - 4 = 0)', en: '<span class="math-display">x = 2</span> (because 2² - 4 = 0)' },
+                        { ar: '<span class="math-display">x = 1</span>', en: '<span class="math-display">x = 1</span>' },
+                        { ar: '<span class="math-display">x = 3</span>', en: '<span class="math-display">x = 3</span>' },
+                        { ar: '<span class="math-display">x = 0</span>', en: '<span class="math-display">x = 0</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'f(2) = 4 - 4 = 0، إذن الصفر عند x = 2', en: 'f(2) = 4 - 4 = 0, so zero at x = 2' }
+                },
+                {
+                    q: { ar: '<strong>س22:</strong> f(x) = x³ - x - 1 على [1, 2]. f(1) = -1, f(2) = 5. الصفر التقريبي لأقرب 0.5:', en: '<strong>Q22:</strong> f(x) = x³ - x - 1 on [1, 2]. f(1) = -1, f(2) = 5. Approximate zero to nearest 0.5:' },
+                    options: [
+                        { ar: '<span class="math-display">x ≈ 1.5</span> (لأن f(1.5) = 0.125 ≈ 0)', en: '<span class="math-display">x ≈ 1.5</span> (because f(1.5) = 0.125 ≈ 0)' },
+                        { ar: '<span class="math-display">x ≈ 1</span>', en: '<span class="math-display">x ≈ 1</span>' },
+                        { ar: '<span class="math-display">x ≈ 2</span>', en: '<span class="math-display">x ≈ 2</span>' },
+                        { ar: '<span class="math-display">x ≈ 1.25</span>', en: '<span class="math-display">x ≈ 1.25</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'f(1.5) = 3.375 - 1.5 - 1 = 0.875... تصحيح: f(1.5) = 3.375 - 1.5 - 1 = 0.875. f(1.3) ≈ 0.197. الصفر ≈ 1.32، لأقرب 0.5 هو 1.5', en: 'f(1.5) = 0.875, f(1.3) ≈ 0.197. Zero ≈ 1.32, nearest 0.5 is 1.5' }
+                },
+                {
+                    q: { ar: '<strong>س23:</strong> f(x) = x² - 2 على [1, 2]. f(1) = -1, f(2) = 2. الصفر التقريبي لأقرب 0.5:', en: '<strong>Q23:</strong> f(x) = x² - 2 on [1, 2]. f(1) = -1, f(2) = 2. Approximate zero to nearest 0.5:' },
+                    options: [
+                        { ar: '<span class="math-display">x ≈ 1.5</span> (لأن √2 ≈ 1.414)', en: '<span class="math-display">x ≈ 1.5</span> (because √2 ≈ 1.414)' },
+                        { ar: '<span class="math-display">x ≈ 1</span>', en: '<span class="math-display">x ≈ 1</span>' },
+                        { ar: '<span class="math-display">x ≈ 2</span>', en: '<span class="math-display">x ≈ 2</span>' },
+                        { ar: '<span class="math-display">x ≈ 1.25</span>', en: '<span class="math-display">x ≈ 1.25</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'x² = 2 → x = √2 ≈ 1.414، لأقرب 0.5 هو 1.5', en: 'x² = 2 → x = √2 ≈ 1.414, nearest 0.5 is 1.5' }
+                },
+                {
+                    q: { ar: '<strong>س24:</strong> f(x) = x³ - 3x + 1 على [0, 1]. f(0) = 1, f(1) = -1. الصفر التقريبي لأقرب 0.5:', en: '<strong>Q24:</strong> f(x) = x³ - 3x + 1 on [0, 1]. f(0) = 1, f(1) = -1. Approximate zero to nearest 0.5:' },
+                    options: [
+                        { ar: '<span class="math-display">x ≈ 0.5</span>', en: '<span class="math-display">x ≈ 0.5</span>' },
+                        { ar: '<span class="math-display">x ≈ 0</span>', en: '<span class="math-display">x ≈ 0</span>' },
+                        { ar: '<span class="math-display">x ≈ 1</span>', en: '<span class="math-display">x ≈ 1</span>' },
+                        { ar: '<span class="math-display">x ≈ 0.75</span>', en: '<span class="math-display">x ≈ 0.75</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'f(0.5) = 0.125 - 1.5 + 1 = -0.375. f(0) = 1 > 0, f(0.5) < 0، الصفر بين 0 و 0.5، لأقرب 0.5 هو 0.5', en: 'f(0.5) = -0.375. f(0) = 1 > 0, f(0.5) < 0, zero between 0 and 0.5, nearest 0.5 is 0.5' }
+                },
+                {
+                    q: { ar: '<strong>س25:</strong> ما طريقة تضييق الفترة لإيجاد الصفر التقريبي؟', en: '<strong>Q25:</strong> What method narrows interval to find approximate zero?' },
+                    options: [
+                        { ar: 'اختبار نقاط المنتصف وتغيير الإشارة', en: 'Test midpoints and sign changes' },
+                        { ar: 'الرسم البياني فقط', en: 'Graph only' },
+                        { ar: 'التخمين العشوائي', en: 'Random guessing' },
+                        { ar: 'حساب المشتقة', en: 'Calculate derivative' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'نختبر نقاط المنتصف ونبحث عن تغيير الإشارة (f(a)·f(b) < 0)', en: 'Test midpoints and look for sign change (f(a)·f(b) < 0)' }
+                }
+            ]
+        },
+        {
+            id: 'sec6',
+            title: { ar: '🔹 القسم 6: مسائل مركبة وتطبيقات (Q26-Q30)', en: '🔹 Section 6: Mixed Problems & Applications (Q26-Q30)' },
+            questions: [
+                {
+                    q: { ar: '<strong>س26:</strong> f(x) = (x-2)/(x+1). هل f متصلة على [0, 3]؟', en: '<strong>Q26:</strong> f(x) = (x-2)/(x+1). Is f continuous on [0, 3]?' },
+                    options: [
+                        { ar: 'نعم، لأن x = -1 (الانقطاع) خارج [0, 3]', en: 'Yes, because x = -1 (discontinuity) is outside [0, 3]' },
+                        { ar: 'لا، لأن الدالة كسرية', en: 'No, because it is rational' },
+                        { ar: 'لا، لأن المقام صفر', en: 'No, because denominator is zero' },
+                        { ar: 'لا يمكن التحديد', en: 'Cannot determine' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'نعم، المتقطع الوحيد عند x = -1 وهو خارج [0, 3]', en: 'Yes, only discontinuity at x = -1 which is outside [0, 3]' }
+                },
+                {
+                    q: { ar: '<strong>س27:</strong> f(x) = 1/(x-2). هل f متصلة على [0, 4]؟', en: '<strong>Q27:</strong> f(x) = 1/(x-2). Is f continuous on [0, 4]?' },
+                    options: [
+                        { ar: 'لا، لأن x = 2 ∈ [0, 4] والمقام = 0', en: 'No, because x = 2 ∈ [0, 4] and denominator = 0' },
+                        { ar: 'نعم', en: 'Yes' },
+                        { ar: 'نعم، لأن الدالة كسرية', en: 'Yes, because it is rational' },
+                        { ar: 'لا يمكن التحديد', en: 'Cannot determine' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'لا، عند x = 2 المقام = 0، و 2 ∈ [0, 4]، إذن غير متصلة على [0, 4]', en: 'No, at x = 2 denominator = 0, and 2 ∈ [0, 4], so discontinuous on [0, 4]' }
+                },
+                {
+                    q: { ar: '<strong>س28:</strong> f(x) = x² - 5x + 6 على [0, 4]. f(0) = 6, f(4) = 2. هل تضمن IVT وجود صفر؟', en: '<strong>Q28:</strong> f(x) = x² - 5x + 6 on [0, 4]. f(0) = 6, f(4) = 2. Does IVT guarantee a zero?' },
+                    options: [
+                        { ar: 'لا، لأن 0 ليس بين f(0)=6 و f(4)=2 (كلاهما موجب)', en: 'No, because 0 is not between f(0)=6 and f(4)=2 (both positive)' },
+                        { ar: 'نعم', en: 'Yes' },
+                        { ar: 'نعم، لأن f كثيرة حدود', en: 'Yes, because f is polynomial' },
+                        { ar: 'لا يمكن التحديد', en: 'Cannot determine' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'لا، IVT تحتاج k بين f(a) و f(b). هنا 0 ليس بين 6 و 2 (كلاهما موجب). لكن فعلياً f(2)=0 و f(3)=0، IVT على [0,4] لا تضمن ذلك مباشرة', en: 'No, IVT needs k between f(a) and f(b). Here 0 not between 6 and 2 (both positive). But actually f(2)=0 and f(3)=0, IVT on [0,4] does not directly guarantee' }
+                },
+                {
+                    q: { ar: '<strong>س29:</strong> f(x) = x³ - 4x على [-3, 3]. f(-3) = -15, f(3) = 15. كم صفر تضمن IVT وجوده؟', en: '<strong>Q29:</strong> f(x) = x³ - 4x on [-3, 3]. f(-3) = -15, f(3) = 15. How many zeros does IVT guarantee?' },
+                    options: [
+                        { ar: 'واحد على الأقل (لأن 0 بين -15 و 15)', en: 'At least one (because 0 is between -15 and 15)' },
+                        { ar: 'ثلاثة بالضبط', en: 'Exactly three' },
+                        { ar: 'لا شيء', en: 'None' },
+                        { ar: 'اثنان', en: 'Two' }
+                    ],
+                    correct: 0,
+                    answer: { ar: 'IVT تضمن وجود صفر واحد على الأقل (0 بين -15 و 15). فعلياً有三个 أصفار: x = -2, 0, 2', en: 'IVT guarantees at least one zero (0 between -15 and 15). Actually three zeros: x = -2, 0, 2' }
+                },
+                {
+                    q: { ar: '<strong>س30:</strong> f(x) = 2x - 3 على [0, 2]. f(0) = -3, f(2) = 1. الصفر الدقيق:', en: '<strong>Q30:</strong> f(x) = 2x - 3 on [0, 2]. f(0) = -3, f(2) = 1. Exact zero:' },
+                    options: [
+                        { ar: '<span class="math-display">x = 1.5</span>', en: '<span class="math-display">x = 1.5</span>' },
+                        { ar: '<span class="math-display">x = 1</span>', en: '<span class="math-display">x = 1</span>' },
+                        { ar: '<span class="math-display">x = 2</span>', en: '<span class="math-display">x = 2</span>' },
+                        { ar: '<span class="math-display">x = 0</span>', en: '<span class="math-display">x = 0</span>' }
+                    ],
+                    correct: 0,
+                    answer: { ar: '2x - 3 = 0 → x = 3/2 = 1.5. والتحقق: f(1.5) = 0 ✓', en: '2x - 3 = 0 → x = 3/2 = 1.5. Check: f(1.5) = 0 ✓' }
+                }
+            ]
+        }
+    ]
+};
+
+function shuffleArray(array) {
+    const arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(rng() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
+
+function prepareShuffledExam() {
+    rng = mulberry32(currentSeed);
+    examData = JSON.parse(JSON.stringify(originalExamData));
+    correctAnswersMap = {};
+    let globalIdx = 0;
+    examData.sections.forEach((section) => {
+        section.questions = shuffleArray(section.questions);
+        section.questions.forEach((q) => {
+            const optionsWithCorrect = q.options.map((opt, idx) => ({ option: opt, isCorrect: idx === q.correct }));
+            const shuffledOptions = shuffleArray(optionsWithCorrect);
+            q.options = shuffledOptions.map(o => o.option);
+            q.correct = shuffledOptions.findIndex(o => o.isCorrect);
+            correctAnswersMap[globalIdx] = String.fromCharCode(97 + q.correct);
+            globalIdx++;
+        });
+    });
+}
+
+function reshuffleExam() {
+    const msg = currentLang === 'ar' ? '🔄 سيتم إنشاء أسئلة جديدة ومسح إجاباتك. هل أنت متأكد؟' : '🔄 New questions will be generated. Are you sure?';
+    if (confirm(msg)) {
+        currentSeed = Date.now(); timeRemaining = TOTAL_TIME; answersVisible = false;
+        prepareShuffledExam(); renderExam(); saveState();
+        alert(currentLang === 'ar' ? '🎲 تم تغيير الأسئلة! حظاً موفقاً! 🍀' : '🎲 Questions changed! Good luck! 🍀');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+}
+
+function setLanguage(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.getElementById('btn-ar').classList.toggle('active', lang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.body.classList.toggle('en-mode', lang === 'en');
+    
+    document.querySelectorAll('[data-ar]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang);
+    });
+    
+    document.querySelectorAll('[data-placeholder-ar]').forEach(el => {
+        el.placeholder = el.getAttribute('data-placeholder-' + lang);
+    });
+    
+    renderExam(); saveState(false);
+}
+
+function renderExam() {
+    const container = document.getElementById('exam-content');
+    const labels = { ar: { option: ['أ', 'ب', 'ج', 'د'], answer: '✅ الإجابة:' }, en: { option: ['A', 'B', 'C', 'D'], answer: '✅ Answer:' } };
+    const lbl = labels[currentLang];
+    let html = '';
+    let globalIdx = 0;
+    
+    examData.sections.forEach((section, secIdx) => {
+        const badgeClass = ['module-1', 'module-2', 'module-3', 'module-4', 'module-5', 'module-6'][secIdx];
+        html += '<section class="bg-white p-6 rounded-2xl shadow-lg border-2 border-amber-100">';
+        html += '<div class="text-center mb-4"><span class="module-badge ' + badgeClass + '">' + section.title[currentLang] + '</span></div>';
+        html += '<ol class="space-y-4 text-sm">';
+        
+        section.questions.forEach((q) => {
+            html += '<li class="border-r-4 border-amber-400 pr-4 py-2" id="q-' + globalIdx + '" style="border-right: 4px solid #d97706; padding-right: 1rem;">';
+            html += '<strong class="text-amber-700">' + (globalIdx + 1) + '.</strong> ' + q.q[currentLang] + '<br>';
+            if (q.svg) html += '<div class="graph-container">' + q.svg + '</div>';
+            
+            q.options.forEach((opt, oIdx) => {
+                html += '<label class="cursor-pointer block mt-2 mr-4 hover:bg-amber-50 rounded-lg p-2 transition" style="margin-right: 1rem;">';
+                html += '<input type="radio" name="q' + globalIdx + '" value="' + String.fromCharCode(97 + oIdx) + '" class="mr-2 ml-2">';
+                html += '<span class="arabic-math">' + lbl.option[oIdx] + ') ' + opt[currentLang] + '</span>';
+                html += '</label>';
+            });
+            
+            html += '<div class="answer-box text-green-700 mt-3 font-medium ' + (answersVisible ? '' : 'hidden') + ' bg-green-50 rounded-lg p-3 border border-green-200">';
+            html += lbl.answer + ' ' + lbl.option[q.correct] + ') <span class="arabic-math">' + q.options[q.correct][currentLang] + '</span><br>';
+            html += '<span class="text-sm text-green-700 mt-2 block arabic-math">' + q.answer[currentLang] + '</span>';
+            html += '</div></li>';
+            globalIdx++;
+        });
+        
+        html += '</ol></section>';
+    });
+    
+    container.innerHTML = html;
+}
+
+function startTimer() {
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+        timeRemaining--;
+        updateTimerDisplay();
+        if (timeRemaining % 60 === 0) saveState(false);
+        if (timeRemaining <= 600) document.getElementById('timer').classList.add('timer-warning');
+        if (timeRemaining <= 0) {
+            clearInterval(timerInterval);
+            alert(currentLang === 'ar' ? "⏰ انتهى الوقت!" : "⏰ Time's up!");
+            gradeExam();
+        }
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const m = Math.floor(timeRemaining / 60);
+    const s = timeRemaining % 60;
+    document.getElementById('timer').textContent = m.toString().padStart(2,'0') + ':' + s.toString().padStart(2,'0');
+}
+
+function toggleAnswers() {
+    answersVisible = !answersVisible;
+    document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden', !answersVisible));
+    saveState(false);
+}
+
+function gradeExam() {
+    let correctCount = 0;
+    const sectionScores = new Array(TOTAL_SECTIONS).fill(0);
+    
+    for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+        const sel = document.querySelector('input[name="q'+i+'"]:checked');
+        const li = document.getElementById('q-' + i);
+        if (li) {
+            const isCorrect = sel && sel.value === correctAnswersMap[i];
+            if (isCorrect) {
+                correctCount++;
+                li.classList.add('correct');
+                li.classList.remove('incorrect');
+                sectionScores[Math.floor(i / QUESTIONS_PER_SECTION)]++;
+            } else {
+                li.classList.add('incorrect');
+                li.classList.remove('correct');
+            }
+        }
+    }
+    
+    const score = Math.round((correctCount / TOTAL_QUESTIONS) * 100);
+    document.getElementById('res-total').textContent = score + ' / 100';
+    document.getElementById('res-name').textContent = document.getElementById('studentName').value || (currentLang === 'ar' ? 'بطل' : 'Champion');
+    document.getElementById('res-date').textContent = new Date().toLocaleDateString(currentLang === 'ar' ? 'ar-AE' : 'en-US');
+    
+    const pc = document.getElementById('sections-performance');
+    pc.innerHTML = '';
+    examData.sections.forEach((s, idx) => {
+        pc.innerHTML += '<div class="flex justify-between items-center p-3 bg-white rounded-lg"><span class="text-gray-700">' + s.title[currentLang] + '</span><span class="font-bold text-amber-700">' + sectionScores[idx] + '/' + QUESTIONS_PER_SECTION + '</span></div>';
+    });
+    
+    const badge = document.getElementById('success-badge');
+    document.getElementById('success-percent').textContent = score + '%';
+    
+    if (currentLang === 'ar') {
+        if (score >= 90) { badge.textContent = '🌟 ممتاز جداً!'; badge.className = 'success-badge grade-excellent'; }
+        else if (score >= 75) { badge.textContent = '👏 ممتاز!'; badge.className = 'success-badge grade-good'; }
+        else if (score >= 50) { badge.textContent = '👍 جيد'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = '💪 حاول مرة أخرى'; badge.className = 'success-badge grade-fail'; }
+    } else {
+        if (score >= 90) { badge.textContent = '🌟 Outstanding!'; badge.className = 'success-badge grade-excellent'; }
+        else if (score >= 75) { badge.textContent = '👏 Excellent!'; badge.className = 'success-badge grade-good'; }
+        else if (score >= 50) { badge.textContent = '👍 Good'; badge.className = 'success-badge grade-pass'; }
+        else { badge.textContent = '💪 Try Again'; badge.className = 'success-badge grade-fail'; }
+    }
+    
+    document.getElementById('results-panel').classList.remove('hidden');
+    document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth' });
+    if (timerInterval) clearInterval(timerInterval);
+}
+
+function sendResultsToEmail() {
+    const btn = document.getElementById('sendEmailBtn');
+    const status = document.getElementById('emailStatus');
+    btn.disabled = true;
+    btn.textContent = currentLang === 'ar' ? '⏳ جاري الإرسال...' : '⏳ Sending...';
+    
+    const name = document.getElementById('studentName').value || 'N/A';
+    const studentClass = document.getElementById('studentClass').value || 'N/A';
+    const date = document.getElementById('examDate').value || new Date().toLocaleDateString();
+    const score = document.getElementById('res-total').textContent;
+    const successRate = document.getElementById('success-percent').textContent;
+    const badge = document.getElementById('success-badge').textContent;
+    
+    let questionsHTML = '<div style="font-family:Arial; direction:rtl;">';
+    questionsHTML += '<h2>📐 ' + (currentLang === 'ar' ? 'نتيجة امتحان النهايات والاتصال وIVT' : 'Limits, Continuity & IVT Exam Result') + '</h2>';
+    questionsHTML += '<p><strong>' + (currentLang === 'ar' ? 'الاسم' : 'Name') + ':</strong> ' + name + '</p>';
+    questionsHTML += '<p><strong>' + (currentLang === 'ar' ? 'الشعبة' : 'Class') + ':</strong> ' + studentClass + '</p>';
+    questionsHTML += '<p><strong>' + (currentLang === 'ar' ? 'التاريخ' : 'Date') + ':</strong> ' + date + '</p>';
+    questionsHTML += '<p><strong>' + (currentLang === 'ar' ? 'الدرجة' : 'Score') + ':</strong> ' + score + ' (' + successRate + '%)</p>';
+    questionsHTML += '<p><strong>' + (currentLang === 'ar' ? 'التقدير' : 'Grade') + ':</strong> ' + badge + '</p>';
+    questionsHTML += '<hr><h3>' + (currentLang === 'ar' ? 'تفاصيل الإجابات:' : 'Answer Details:') + '</h3><table style="width:100%; border-collapse:collapse;">';
+    questionsHTML += '<tr style="background:#d97706; color:white;"><th style="padding:8px; border:1px solid #ddd;">#</th><th style="padding:8px; border:1px solid #ddd;">' + (currentLang === 'ar' ? 'السؤال' : 'Question') + '</th><th style="padding:8px; border:1px solid #ddd;">' + (currentLang === 'ar' ? 'إجابة الطالب' : 'Student Answer') + '</th><th style="padding:8px; border:1px solid #ddd;">' + (currentLang === 'ar' ? 'الصحيحة' : 'Correct') + '</th><th style="padding:8px; border:1px solid #ddd;">' + (currentLang === 'ar' ? 'النتيجة' : 'Result') + '</th></tr>';
+    
+    let globalIdx = 0;
+    examData.sections.forEach((section) => {
+        questionsHTML += '<tr style="background:#fef3c7;"><td colspan="5" style="padding:8px; font-weight:bold; border:1px solid #ddd;">' + section.title.ar + '</td></tr>';
+        section.questions.forEach((q) => {
+            const sel = document.querySelector('input[name="q'+globalIdx+'"]:checked');
+            const sv = sel ? sel.value : null;
+            const cv = correctAnswersMap[globalIdx];
+            const ic = sv === cv;
+            let sat = currentLang === 'ar' ? '❌ لم يجب' : '❌ No answer';
+            let sac = '#dc2626';
+            if (sv) {
+                const si = sv.charCodeAt(0) - 97;
+                sat = q.options[si][currentLang];
+                sac = ic ? '#16a34a' : '#dc2626';
+            }
+            const cat = q.options[q.correct][currentLang];
+            const rb = ic ? '#f0fdf4' : '#fef2f2';
+            questionsHTML += '<tr style="background:' + rb + ';"><td style="padding:8px; border:1px solid #ddd; text-align:center;">' + (globalIdx+1) + '</td><td style="padding:8px; border:1px solid #ddd;">' + q.q.ar + '</td><td style="padding:8px; border:1px solid #ddd; color:' + sac + ';">' + sat + '</td><td style="padding:8px; border:1px solid #ddd; color:#16a34a;">' + cat + '</td><td style="padding:8px; border:1px solid #ddd; text-align:center;">' + (ic?'✅':'❌') + '</td></tr>';
+            globalIdx++;
+        });
+    });
+    questionsHTML += '</table></div>';
+    
+    const templateParams = {
+        to_email: TARGET_EMAIL,
+        student_name: name,
+        student_class: studentClass,
+        exam_date: date,
+        total_score: score,
+        success_rate: successRate,
+        grade: badge,
+        answers_table: questionsHTML
+    };
+    
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+        .then(() => {
+            status.textContent = currentLang === 'ar' ? '✅ تم الإرسال بنجاح!' : '✅ Sent successfully!';
+            status.style.color = '#16a34a';
+            btn.textContent = currentLang === 'ar' ? '✓ تم' : '✓ Sent';
+            alert(currentLang === 'ar' ? 'تم إرسال النتيجة للمعلم بنجاح!' : 'Result sent to teacher successfully!');
+        })
+        .catch((error) => {
+            status.textContent = currentLang === 'ar' ? '❌ فشل الإرسال' : '❌ Failed to send';
+            status.style.color = '#dc2626';
+            btn.disabled = false;
+            btn.textContent = currentLang === 'ar' ? '📧 حاول مرة أخرى' : '📧 Try Again';
+            alert(currentLang === 'ar' ? 'فشل الإرسال: ' + error.text : 'Failed: ' + error.text);
+        });
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    const saved = loadState();
+    if (saved && saved.seed) {
+        currentSeed = saved.seed;
+        currentLang = saved.lang || 'ar';
+        timeRemaining = saved.timeRemaining !== undefined ? saved.timeRemaining : TOTAL_TIME;
+        answersVisible = saved.answersVisible || false;
+    } else {
+        currentSeed = Date.now();
+    }
+    
+    document.getElementById('btn-ar').classList.toggle('active', currentLang === 'ar');
+    document.getElementById('btn-en').classList.toggle('active', currentLang === 'en');
+    document.body.classList.toggle('en-mode', currentLang === 'en');
+    document.documentElement.lang = currentLang;
+    document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+    
+    document.querySelectorAll('[data-ar]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + currentLang);
+    });
+    
+    document.querySelectorAll('[data-placeholder-ar]').forEach(el => {
+        el.placeholder = el.getAttribute('data-placeholder-' + currentLang);
+    });
+    
+    prepareShuffledExam();
+    renderExam();
+    if (saved) {
+        if (saved.studentName) document.getElementById('studentName').value = saved.studentName;
+        if (saved.studentClass) document.getElementById('studentClass').value = saved.studentClass;
+        if (saved.examDate) document.getElementById('examDate').value = saved.examDate;
+        if (saved.answers) restoreAnswers(saved.answers);
+    }
+    setupAnswerListeners();
+    setupInputListeners();
+    startTimer();
+});
+window.addEventListener('beforeunload', () => saveState(false));
+</script>
+</body>
+</html>
